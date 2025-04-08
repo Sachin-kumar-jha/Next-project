@@ -18,6 +18,20 @@
     --foreground: #ededed;
   }
 }
+/* Custom thin gradient scrollbar */
+::-webkit-scrollbar {
+  height: 3px;
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #151617, #201f1f); /* Blue to Purple */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent; /* Removes default track */
+}
 
 body {
   background: var(--background);
