@@ -1,36 +1,125 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🔐 Next.js Google Auth + OTP Verification
 
-## Getting Started
+A full-stack auth app using **Next.js**, **NextAuth (Google OAuth)**, **MongoDB + Prisma**, with **OTP verification** and an **Admin Panel** for managing users.
 
-First, run the development server:
+---
+
+## 🚀 Features
+
+- Google OAuth login via NextAuth
+- OTP email verification post-login
+- Admin panel to block/delete users
+- MongoDB with Prisma ORM
+- Nodemailer for sending OTPs
+
+---
+
+## 🛠 Tech Stack
+
+Next.js • Tailwind CSS • NextAuth.js • Prisma • MongoDB • Nodemailer
+
+---
+
+## 📦 Installation
+
+### 1. Clone & Install
+
+```bash
+git clone https://github.com/yourusername/your-repo.git
+cd your-repo
+npm install
+```
+
+### 2. Environment Variables
+
+Create a `.env` file in the root of your project and add the following:
+
+```env
+# Database
+DATABASE_URL=mongodb+srv://<username>:<password>@cluster.mongodb.net/<dbname>?retryWrites=true&w=majority
+
+# NextAuth Configuration
+NEXTAUTH_SECRET=your-random-secret
+NEXTAUTH_URL=http://localhost:3000
+
+# Google OAuth
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+
+# Email Credentials for OTP (Use Gmail App Password)
+EMAIL_USER=youremail@gmail.com
+EMAIL_PASS=your-app-password
+EMAIL_FROM="Your Name <youremail@gmail.com>"
+```
+
+> 💡 To generate `NEXTAUTH_SECRET`, run:
+> ```bash
+> openssl rand -base64 32
+> ```
+>
+> 🔐 For `EMAIL_PASS`, [generate a Gmail App Password](https://support.google.com/accounts/answer/185833?hl=en) and use it instead of your Gmail password.
+
+### 3. Prisma Setup
+
+```bash
+npx prisma generate
+npx prisma db push
+```
+
+Optionally, open Prisma Studio to view data:
+```bash
+npx prisma studio
+```
+
+---
+
+## ▶ Run App
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+App will be available at: [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🔁 OTP Flow
 
-## Learn More
+1. Login with Google  
+2. OTP sent via email  
+3. User enters OTP at `/verify-otp`  
+4. Redirected to `/user` on success
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 👑 Admin Panel
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- URL: `/admin`  
+- Access: Users with `role = "ADMIN"`
+- Features: View, block, delete users
 
-## Deploy on Vercel
+To promote a user to admin, update their role in the database:
+```json
+{
+  "email": "admin@example.com",
+  "role": "ADMIN"
+}
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📁 Project Structure
+
+```
+pages/
+├─ api/auth/[...nextauth].ts
+├─ api/otp/send.ts & verify.ts
+├─ admin/index.tsx
+├─ user/index.tsx
+├─ verify-otp.tsx
+prisma/schema.prisma
+lib/prisma.ts
+middleware.ts
+
+```
+
