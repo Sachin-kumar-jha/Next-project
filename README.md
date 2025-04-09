@@ -1,6 +1,6 @@
 # 🔐 Next.js Google Auth + OTP Verification
 
-A full-stack auth app using **Next.js**, **NextAuth (Google OAuth)**, **MongoDB + Prisma**, with **OTP verification** and an **Admin Panel** for managing users.
+A full-stack auth app using **Next.js App Router**, **NextAuth (Google OAuth)**, **MongoDB + Prisma**, with **OTP verification** and an **Admin Panel** for managing users.
 
 ---
 
@@ -16,7 +16,7 @@ A full-stack auth app using **Next.js**, **NextAuth (Google OAuth)**, **MongoDB 
 
 ## 🛠 Tech Stack
 
-Next.js • Tailwind CSS • NextAuth.js • Prisma • MongoDB • Nodemailer
+Next.js (App Router) • Tailwind CSS • NextAuth.js • Prisma • MongoDB • Nodemailer
 
 ---
 
@@ -49,7 +49,6 @@ GOOGLE_CLIENT_SECRET=your-google-client-secret
 # Email Credentials for OTP (Use Gmail App Password)
 EMAIL_USER=youremail@gmail.com
 EMAIL_PASS=your-app-password
-EMAIL_FROM="Your Name <youremail@gmail.com>"
 ```
 
 > 💡 To generate `NEXTAUTH_SECRET`, run:
@@ -111,15 +110,16 @@ To promote a user to admin, update their role in the database:
 ## 📁 Project Structure
 
 ```
-pages/
-├─ api/auth/[...nextauth].ts
-├─ api/otp/send.ts & verify.ts
-├─ admin/index.tsx
-├─ user/index.tsx
-├─ verify-otp.tsx
+app/
+├─ api/
+│  ├─ auth/[...nextauth]/route.ts
+│  ├─ send-otp/route.ts
+│  └─ verify-otp/route.ts
+├─ admin/page.tsx
+├─ user/page.tsx
+├─ verify-otp/page.tsx
 prisma/schema.prisma
 lib/prisma.ts
 middleware.ts
-
 ```
 
